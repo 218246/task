@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  server_a:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'user'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+  server_b:
+    build: ./server_b
+    links:
+      - server_a
+    ports:
+      - "5000:5000"
